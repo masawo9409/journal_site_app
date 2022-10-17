@@ -10,8 +10,8 @@
     <h1>論文詳細</h1>
     <p>タイトル</p>
     <p>{{ $article->title }}</p>
-    <br>
     <p>{!! nl2br(e($article->body)) !!}</p>
-
+    <button onclick="location.href='/articles'">戻る</button>
+    
 </body>
 </html>
