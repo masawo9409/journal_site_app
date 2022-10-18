@@ -34,12 +34,42 @@ class ArticleController extends Controller
         //Modelsクラスの中でインスタンスの作成
         $article = new Article;
 
-        //値の用意
+        //Articleデータベースの内容をリクエストされたtitleとbodyに置き換え
         $article->title = $request->title;
         $article->body  = $request->body;
 
+        //上記の内容を保存
         $article->save();
-        
+        //保存完了したあとに、indexページに再接続している。
         return redirect('/articles');
     }
+
+    public function edit($id) 
+    {   
+        //Articleモデルクラスから編集対象のidカラムを持つデータを$articleへ代入。
+        $article = Article::find($id);
+        //ルーティングからeditが呼び出されたときに、edit.blade.phpの$articleに代入して表示。
+        return view('articles.edit', ['article' => $article]);
+    }
+
+    public function update(Request $request,$id)
+    {
+        $article = Article::find($id);
+
+        $article->title = $request->title;
+        $article->body = $request->body;
+
+        $article->save();
+
+        return redirect('/articles');
+    }
+
+    public function destroy($id)
+    {
+        $memo = Article::find($id);
+        $memo->delete();
+
+        return redirect('/articles');
+    }
+    
 }
